@@ -149,4 +149,4 @@ chunk.digIn(
 ```
 
 ## Support Us
-Just star the repository, thats it! 😉
+Just star the repository, that's it! 😉
