@@ -48,7 +48,7 @@ const upload = (index, files, unlink) => {
             // 1️⃣ If you're using the wester-chunk-upload php library...
             ...file.headers
 
-            // 2️⃣ You can also make the headers compatible with other server-side implementations
+            // 2️⃣ Customize the headers
             "x-chunk-number": file.headers["x-chunk-number"],
             "x-chunk-total-number": file.headers["x-chunk-total-number"],
             "x-chunk-size": file.headers["x-chunk-size"],
@@ -62,12 +62,12 @@ const upload = (index, files, unlink) => {
             unlink(file.path);
 
             switch (response.status) {
-                // done
+                // ✅ done
                 case 200:
                     console.log(response.data);
                 break;
 
-                // still uploading...
+                // 🕗 still uploading...
                 case 201:
                     console.log(`${response.data.progress}% uploaded...`);
 
@@ -77,6 +77,7 @@ const upload = (index, files, unlink) => {
             }
         })
         .catch(error => {
+            // ⁉ waddafuk? 😟
             if (error.response) {
                 if ([400, 404, 415, 500, 501].includes(error.response.status)) {
                     unlink(file.path);
