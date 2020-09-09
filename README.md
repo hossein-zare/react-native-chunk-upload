@@ -43,10 +43,12 @@ const upload = (index, files, unlink) => {
             "Content-Type": "multipart/form-data",
             "Accept": 'application/json',
 
-            // If you're using the wester-chunk-upload php library...
+            // 💥 Choose one of the following methods:
+
+            // 1️⃣ If you're using the wester-chunk-upload php library...
             ...file.headers
 
-            // You can also make the headers compatible with your server-side
+            // 2️⃣ You can also make the headers compatible with other server-side implementations
             "x-chunk-number": file.headers["x-chunk-number"],
             "x-chunk-total-number": file.headers["x-chunk-total-number"],
             "x-chunk-size": file.headers["x-chunk-size"],
