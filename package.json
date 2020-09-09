@@ -1,0 +1,37 @@
+{
+  "name": "react-native-chunk-upload",
+  "version": "1.0.0",
+  "description": "A package to bring Chunked File Upload into React Native. Split a large file into multiple smaller pieces then upload them without worrying about disconnection, even if it happens React Native Chunk Upload will upload only the failed chunk not the whole file!",
+  "main": "src/index.js",
+  "types": "index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hossein-zare/react-native-chunk-upload.git"
+  },
+  "keywords": [
+    "upload",
+    "chunk",
+    "chunk-upload",
+    "chunked-upload",
+    "resume",
+    "resumable",
+    "resumable-upload",
+    "component",
+    "reactnative",
+    "react-native",
+    "react native",
+    "android",
+    "ios",
+    "javascript"
+  ],
+  "dependencies": {
+    "react-native-fs": "^2.16.6",
+    "rn-fetch-blob": "^0.12.0"
+  },
+  "author": "Hossein Zare",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hossein-zare/react-native-chunk-upload/issues"
+  },
+  "homepage": "https://github.com/hossein-zare/react-native-chunk-upload#readme"
+}
