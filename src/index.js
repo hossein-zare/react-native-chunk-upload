@@ -34,7 +34,7 @@ class ChunkUpload {
         await RNFetchBlob.fs.readStream(
             'file://' + (this.data.path).replace('file://', ''),
             'base64',
-            this.size
+            this.data.size
         )
             .then((ifstream) => {
                 ifstream.open();
@@ -70,7 +70,7 @@ class ChunkUpload {
                 .catch(e => this.onWriteFileError(e))
         }
     
-        this.onFinish(this.data, files, this.unlink);
+        this.onFinish(files, this.unlink);
     }
 
     unlink(path) {
