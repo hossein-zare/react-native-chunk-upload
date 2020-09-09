@@ -114,7 +114,7 @@ headers: {
 ```
 * https://github.com/hossein-zare/wester-chunk-upload
 
-## Methods
+## Schema
 ```javascript
 chunk.digIn(
     (
