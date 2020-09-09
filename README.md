@@ -97,7 +97,16 @@ const upload = (index, files, unlink) => {
 ```
 
 ### Wester Chunk Upload PHP Library 
-If you're going to use this library, you won't need much to do...
+If you're going to use this library, you won't need much to do...  
+```javascript
+// easy peasy, right? 😁
+headers: {
+    "Content-Type": "multipart/form-data",
+    "Accept": 'application/json',
+
+    ...file.headers
+}
+```
 * https://github.com/hossein-zare/wester-chunk-upload
 
 ## Methods
