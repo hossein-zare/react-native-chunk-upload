@@ -18,21 +18,9 @@ declare namespace ChunkUpload {
 
     export interface onFinish {
         (
-            data?: Data,
             files?: File[],
             unlink?: (path: string) => void
         ): void
-    }
-
-    export interface Data {
-        path: string,
-        size: number,
-        fileName: string,
-        fileSize: number,
-        fileIdentity: string,
-        fileShortId: string,
-        destinationPath: string,
-        totalNumber: number
     }
 
     export interface File {
