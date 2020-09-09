@@ -55,7 +55,7 @@ upload(index, files, unlink) {
             "x-chunk-total-number": file.headers["x-chunk-total-number"],
             "x-chunk-size": file.headers["x-chunk-size"],
             "x-file-name": file.headers["x-file-name"],
-            "x-file-size": file.headers["x-file-name"],
+            "x-file-size": file.headers["x-file-size"],
             "x-file-identity": file.headers["x-file-identity"]
         }
     })
