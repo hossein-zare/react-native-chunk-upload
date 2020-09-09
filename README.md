@@ -29,12 +29,12 @@ const chunk = new ChunkUpload({
     onWriteFileError: (e) => console.log(e),
 });
 
-chunk.digIn((data, files, unlink) => {
+chunk.digIn((files, unlink) => {
     if (files.length > 0)
         this.upload(0, files, unlink);
 });
 
-const upload = (index, files, unlink) => {
+upload(index, files, unlink) {
     const file = files[index];
     const body = new FormData();
 
@@ -48,7 +48,7 @@ const upload = (index, files, unlink) => {
             // 💥 Choose one of the following methods:
 
             // 1️⃣ If you're using the wester-chunk-upload php library...
-            ...file.headers
+            ...file.headers,
 
             // 2️⃣ Customize the headers
             "x-chunk-number": file.headers["x-chunk-number"],
@@ -84,11 +84,11 @@ const upload = (index, files, unlink) => {
                 if ([400, 404, 415, 500, 501].includes(error.response.status)) {
                     unlink(file.path);
 
-                    console.danger(error.response.status, 'Failed to upload the chunk.')
+                    console.log(error.response.status, 'Failed to upload the chunk.')
                 } else if (error.response.status === 422) {
                     unlink(file.path);
 
-                    console.warn('Validation Error', error.response.data);
+                    console.log('Validation Error', error.response.data);
                 } else {
                     console.log('Re-uploading the chunk...');
                     this.upload(index, files, unlink);
@@ -118,16 +118,6 @@ headers: {
 ```javascript
 chunk.digIn(
     (
-        data: {
-            path: string,
-            size: number,
-            fileName: string,
-            fileSize: number,
-            fileIdentity: string,
-            fileShortId: string,
-            destinationPath: string,
-            totalNumber: number
-        },
         files: {
             number: number,
             path: string,
