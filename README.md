@@ -40,7 +40,7 @@ upload(index, files, unlink) {
 
     body.append('video', file.blob);
 
-    Axios.post('url', body, {
+    Axios.post('❌ URL HERE ❌', body, {
         headers: {
             "Content-Type": "multipart/form-data",
             "Accept": 'application/json',
