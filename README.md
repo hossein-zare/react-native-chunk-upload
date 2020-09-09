@@ -77,7 +77,7 @@ const upload = (index, files, unlink) => {
             }
         })
         .catch(error => {
-            // ⁉ waddafuk? 😟
+            // ❌ waddafuk? 😟
             if (error.response) {
                 if ([400, 404, 415, 500, 501].includes(error.response.status)) {
                     unlink(file.path);
