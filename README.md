@@ -29,7 +29,8 @@ const chunk = new ChunkUpload({
 });
 
 chunk.digIn((data, files, unlink) => {
-    this.upload(0, files, unlink);
+    if (files.length > 0)
+        this.upload(0, files, unlink);
 });
 
 const upload = (index, files, unlink) => {
