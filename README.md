@@ -1,6 +1,6 @@
 # React Native Chunk Upload
 ![React-Native-Chunk-Upload](https://raw.githubusercontent.com/hossein-zare/react-native-chunk-upload/master/assets/presentation.png)
-A package to bring **Chunked File Upload** into **React Native**. Split a large file into multiple smaller pieces then upload them without worrying too much about disconnection, even if it happens **React Native Chunk Upload** will upload only the failed chunk not the whole file!
+A package to bring **Chunked File Upload** into **React Native**. Split a large file into multiple smaller pieces then upload them without worrying about disconnection, even if it happens **React Native Chunk Upload** will upload only the failed chunk not the whole file!
 
 ## Dependencies
 ⚠ Make sure the following packages are installed.
