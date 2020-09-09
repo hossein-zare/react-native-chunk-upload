@@ -114,7 +114,9 @@ class ChunkUpload {
 }
 
 ChunkUpload.defaultProps = {
-    onFinish: () => {}
+    onFinish: () => {},
+    onFetchBlobError: () => {},
+    onWriteFileError: () => {},
 };
 
 export default ChunkUpload;
