@@ -72,7 +72,7 @@ const upload = (index, files, unlink) => {
         })
         .catch(error => {
             if (error.response) {
-                if (this.codes.includes(error.response.status)) {
+                if ([400, 404, 415, 500, 501].includes(error.response.status)) {
                     unlink(file.path);
 
                     console.danger(error.response.status, 'Failed to upload the chunk.')
