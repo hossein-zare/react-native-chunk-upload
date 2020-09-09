@@ -22,6 +22,10 @@ const chunk = new ChunkUpload({
     size: 10095, // chunk size  (Note: chunk size must be multiples of 3)
     fileName: 'my-file.mp4', // original file name
     fileSize: 75462163, // original file size
+
+    // Errors
+    onFetchBlobError: (e) => console.log(e),
+    onWriteFileError: (e) => console.log(e),
 });
 
 chunk.digIn((data, files, unlink) => {
@@ -92,8 +96,7 @@ const upload = (index, files, unlink) => {
 }
 ```
 
-### Wester Chunk Upload PHP Library
-Both of these PHP and React Native packages have been created to integrate with eachother.  
+### Wester Chunk Upload PHP Library 
 If you're going to use this library, you won't need much to do...
 * https://github.com/hossein-zare/wester-chunk-upload
 
@@ -132,3 +135,6 @@ chunk.digIn(
     ): void
 ): void;
 ```
+
+## Support Us
+Just star the repository, thats it! 😉
