@@ -39,7 +39,7 @@ const upload = (index, files, unlink) => {
             "Content-Type": "multipart/form-data",
             "Accept": 'application/json',
 
-            // If you're using the wester-chunk-upload php package...
+            // If you're using the wester-chunk-upload php library...
             ...file.headers
 
             // You can also make the headers compatible with your server-side
@@ -87,3 +87,7 @@ const upload = (index, files, unlink) => {
         });
 }
 ```
+### Wester Chunk Upload PHP Library
+Both of these PHP and React Native packages have been created to integrate with eachother.  
+If you're going to use this library, you won't need much to do...
+* https://github.com/hossein-zare/wester-chunk-upload
