@@ -38,7 +38,7 @@ upload(index, files, unlink) {
     const file = files[index];
     const body = new FormData();
 
-    body.append('video', file.blob);
+    body.append('video', file.blob); // param name
 
     Axios.post('❌ URL HERE ❌', body, {
         headers: {
