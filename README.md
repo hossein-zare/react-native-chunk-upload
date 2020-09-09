@@ -1,4 +1,5 @@
 # React Native Chunk Upload
+![React-Native-Chunk-Upload](https://raw.githubusercontent.com/hossein-zare/react-native-chunk-upload/master/assets/presentation.png)
 A package to bring **Chunked File Upload** into **React Native**.
 
 ## Dependencies
