@@ -19,7 +19,7 @@ import ChunkUpload from 'react-native-chunk-upload';
 
 const chunk = new ChunkUpload({
     path: '/storage/.../my-file.mp4', // path to the file
-    size: 10095, // chunk size
+    size: 10095, // chunk size  (Note: chunk size must be multiples of 3)
     fileName: 'my-file.mp4', // original file name
     fileSize: 75462163, // original file size
 });
@@ -91,7 +91,44 @@ const upload = (index, files, unlink) => {
         });
 }
 ```
+
 ### Wester Chunk Upload PHP Library
 Both of these PHP and React Native packages have been created to integrate with eachother.  
 If you're going to use this library, you won't need much to do...
 * https://github.com/hossein-zare/wester-chunk-upload
+
+## Methods
+```javascript
+chunk.digIn(
+    (
+        data: {
+            path: string,
+            size: number,
+            fileName: string,
+            fileSize: number,
+            fileIdentity: string,
+            fileShortId: string,
+            destinationPath: string,
+            totalNumber: number
+        },
+        files: {
+            number: number,
+            path: string,
+            headers: {
+                "x-chunk-number": number,
+                "x-chunk-total-number": number,
+                "x-chunk-size": number,
+                "x-file-name": string,
+                "x-file-size": number,
+                "x-file-identity": string
+            },
+            blob: {
+                name: string,
+                type: string,
+                uri: string
+            }
+        }[],
+        unlink: (path: string) => void
+    ): void
+): void;
+```
