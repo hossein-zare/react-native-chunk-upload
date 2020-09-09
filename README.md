@@ -73,8 +73,12 @@ const upload = (index, files, unlink) => {
         .catch(error => {
             if (error.response) {
                 if (this.codes.includes(error.response.status)) {
+                    unlink(file.path);
+
                     console.danger(error.response.status, 'Failed to upload the chunk.')
                 } else if (error.response.status === 422) {
+                    unlink(file.path);
+
                     console.warn('Validation Error', error.response.data);
                 } else {
                     console.log('Re-uploading the chunk...');
