@@ -9,9 +9,16 @@ A package to bring **Chunked File Upload** / **Resumable File Upload** into **Re
 * **`rn-fetch-blob`** https://github.com/joltup/rn-fetch-blob
 
 ## Installation
-```bash
-npm i react-native-chunk-upload
-```
+* **via NPM**
+
+    ```bash
+    npm i react-native-chunk-upload
+    ```
+* **via Yarn**
+
+    ```bash
+    yarn add react-native-chunk-upload
+    ```
 
 ## Basic Usage
 ```javascript
