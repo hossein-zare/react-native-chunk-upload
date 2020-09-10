@@ -53,6 +53,7 @@ class ChunkUpload {
 
     async storeChunks(chunks) {
         let files = [];
+        let error = false;
 
         for (let [index, chunk] of chunks.entries()) {
             index+= 1;
@@ -67,7 +68,18 @@ class ChunkUpload {
                         blob: this.getBlobObject(path)
                     });
                 })
-                .catch(e => this.onWriteFileError(e))
+                .catch(e => {
+                    error = true;
+                    this.onWriteFileError(e);
+                });
+
+            if (error) {
+                for (let file of files) {
+                    this.unlink(file.path);
+                }
+
+                break;
+            }
         }
     
         this.onFinish(files, this.unlink);
