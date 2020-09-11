@@ -7,7 +7,7 @@ A package to bring **Chunked File Upload** / **Resumable File Upload** into **Re
 In v1.x we had to first break the whole file into smaller pieces and then start uploading them.  
 But in v2.x this problem has been fixed. In addition, the speed of this process has increased 10 times.
 
-<pre><code>.digIn(<b>file</b> instead of <b>files</b>, unlink, <b>next</b>*, <b>retry</b>*);</code></pre>
+<pre><code>.digIn(<b>file</b> instead of <b>files</b>, <b>next</b>*, <b>retry</b>*, unlink);</code></pre>
 You may want to take a look at the [Schema](#schema) section.
 
 ## Dependencies
@@ -46,7 +46,7 @@ const chunk = new ChunkUpload({
 
 chunk.digIn(this.upload.bind(this));
 
-upload(file, unlink, next, retry) {
+upload(file, next, retry, unlink) {
     const body = new FormData();
 
     body.append('video', file.blob); // param name
@@ -145,9 +145,9 @@ chunk.digIn(
                 uri: string
             }
         },
-        unlink: (path: string) => void,
         next: () => void,
-        retry: () => void
+        retry: () => void,
+        unlink: (path: string) => void
     ): void
 ): void;
 ```
