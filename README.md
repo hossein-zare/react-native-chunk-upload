@@ -8,7 +8,7 @@ In v1.x we had to first break the whole file into smaller pieces and then start 
 But in v2.x this problem has been fixed. In addition, the speed of this process has increased 10 times.
 
 <pre><code>.digIn(<b>file</b> instead of <b>files</b>, unlink, <b>next</b>*, <b>retry</b>*);</code></pre>
-You may want to take a look at the [Schema](#schema) section
+You may want to take a look at the [Schema](#schema) section.
 
 ## Dependencies
 ⚠ Make sure the following packages are installed.
