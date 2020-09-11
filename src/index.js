@@ -14,6 +14,10 @@ class ChunkUpload {
             totalNumber: 0
         };
 
+        this.chunks = [];
+        this.level = 0;
+        this.file = null;
+
         this.data.fileShortId = this.data.fileIdentity.substr(0, 10);
         this.data.totalNumber = this.getTotalNumber();
 
@@ -22,15 +26,14 @@ class ChunkUpload {
         this.onWriteFileError = props.onWriteFileError;
     }
 
-    digIn(onFinish = () => {}) {
-        this.onFinish = onFinish;
+    digIn(event = () => {}) {
+        this.event = event;
 
         this.getBase64Chunks();
     }
 
     async getBase64Chunks() {
-        let data = [];
-
+        let i = 0;
         await RNFetchBlob.fs.readStream(
             'file://' + (this.data.path).replace('file://', ''),
             'base64',
@@ -40,53 +43,70 @@ class ChunkUpload {
                 ifstream.open();
 
                 ifstream.onData((chunk) => {
-                    data.push(chunk);
+                    i++;
+                    this.chunks.push(chunk);
+
+                    if (i === 1)
+                        this.next();
                 });
 
                 ifstream.onError(e => this.onFetchBlobError(e));
 
                 ifstream.onEnd(() => {
-                    this.storeChunks(data);
+                    //
                 });
             });
     }
 
-    async storeChunks(chunks) {
-        let files = [];
-        let error = false;
+    async next() {
+        this.level++;
 
-        for (let [index, chunk] of chunks.entries()) {
-            index+= 1;
-            const path = `${this.data.destinationPath}/chunk-${this.data.fileShortId}-${index}.tmp`;
+        if (this.level > 1) {
+            await this.unlink(this.file.path);
+        }
 
-            await RNFetchBlob.fs.writeFile(path, chunk, 'base64')
-                .then(() => {
-                    files.push({
-                        number: index,
-                        path,
-                        headers: this.getHeaders(index),
-                        blob: this.getBlobObject(path)
-                    });
-                })
-                .catch(e => {
-                    error = true;
-                    this.onWriteFileError(e);
-                });
+        this.store(this.level);
+    }
 
-            if (error) {
-                for (let file of files) {
-                    this.unlink(file.path);
-                }
+    retry() {
+        this.eject();
+    }
+
+    async store(index) {
+        let chunk = null;
+
+        while (true) {
+            if (index <= this.chunks.length) {
+                chunk = this.chunks[index - 1];
 
                 break;
             }
         }
+        
+        const path = `${this.data.destinationPath}/chunk-${this.data.fileShortId}-${index}.tmp`;
+
+        await RNFetchBlob.fs.writeFile(path, chunk, 'base64')
+            .then(() => {
+                this.file = {
+                    number: index,
+                    path,
+                    headers: this.getHeaders(index),
+                    blob: this.getBlobObject(path)
+                };
+            })
+            .catch(e => {
+                this.onWriteFileError(e);
+            });
     
-        this.onFinish(files, this.unlink);
+        this.eject();
     }
 
-    unlink(path) {
-        RNFS.unlink(path)
+    eject() {
+        this.event(this.file, this.unlink.bind(this), this.next.bind(this), this.retry.bind(this));
+    }
+
+    async unlink(path) {
+        await RNFS.unlink(path)
             .then(() => {
                 //
             })
