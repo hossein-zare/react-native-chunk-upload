@@ -1,6 +1,14 @@
-# React Native Chunk Upload
+# React Native Chunk Upload 2.x
 ![React-Native-Chunk-Upload](https://raw.githubusercontent.com/hossein-zare/react-native-chunk-upload/master/assets/presentation.png)
+
 A package to bring **Chunked File Upload** / **Resumable File Upload** into **React Native**. Split a large file into multiple smaller pieces then upload them without worrying about network disconnection, even if it happens **React Native Chunk Upload** will only upload the failed chunk not the whole file!
+
+## Changelog
+In v1.x we had to first break the whole file into smaller pieces and then start uploading them.  
+But in v2.x this problem has been fixed. In addition, the speed of this process has increased 10 times.
+
+<pre><code>.digIn(<b>file</b> instead of <b>files</b>, unlink, <b>next</b>*, <b>retry</b>*);</code></pre>
+You may want to take a look at the [Schema](#schema) section
 
 ## Dependencies
 ⚠ Make sure the following packages are installed.
@@ -26,23 +34,22 @@ import Axios from 'axios';
 import ChunkUpload from 'react-native-chunk-upload';
 
 const chunk = new ChunkUpload({
-    path: '/storage/.../my-file.mp4', // path to the file
-    size: 10095, // chunk size  (Note: chunk size must be multiples of 3)
-    fileName: 'my-file.mp4', // original file name
-    fileSize: 75462163, // original file size
+    path: response.path,
+    size: 10095,
+    fileName: response.fileName,
+    fileSize: response.size,
 
     // Errors
     onFetchBlobError: (e) => console.log(e),
     onWriteFileError: (e) => console.log(e),
 });
 
-chunk.digIn((files, unlink) => {
-    if (files.length > 0)
-        this.upload(0, files, unlink);
+chunk.digIn((file, unlink, next, retry) => {
+    if (file)
+        this.upload(file, unlink, next, retry);
 });
 
-upload(index, files, unlink) {
-    const file = files[index];
+upload(file, unlink, next, retry) {
     const body = new FormData();
 
     body.append('video', file.blob); // param name
@@ -67,21 +74,19 @@ upload(index, files, unlink) {
         }
     })
         .then(response => {
-            // Delete the chunk
-            unlink(file.path);
-
             switch (response.status) {
                 // ✅ done
                 case 200:
+
                     console.log(response.data);
+                    
                 break;
 
                 // 🕗 still uploading...
                 case 201:
                     console.log(`${response.data.progress}% uploaded...`);
 
-                    if (typeof files[index + 1] !== 'undefined')
-                        this.upload(index + 1, files, unlink);
+                    next();
                 break;
             }
         })
@@ -89,20 +94,22 @@ upload(index, files, unlink) {
             // ❌ waddafuk? 😟
             if (error.response) {
                 if ([400, 404, 415, 500, 501].includes(error.response.status)) {
-                    unlink(file.path);
+                    console.log(error.response.status, 'Failed to upload the chunk.');
 
-                    console.log(error.response.status, 'Failed to upload the chunk.')
+                    unlink(file.path);
                 } else if (error.response.status === 422) {
-                    unlink(file.path);
-
                     console.log('Validation Error', error.response.data);
+                    
+                    unlink(file.path);
                 } else {
                     console.log('Re-uploading the chunk...');
-                    this.upload(index, files, unlink);
+
+                    retry();
                 }
             } else {
                 console.log('Re-uploading the chunk...');
-                this.upload(index, files, unlink);
+
+                retry();
             }
         });
 }
@@ -125,8 +132,7 @@ headers: {
 ```javascript
 chunk.digIn(
     (
-        files: {
-            number: number,
+        file: {
             path: string,
             headers: {
                 "x-chunk-number": number,
@@ -141,8 +147,10 @@ chunk.digIn(
                 type: string,
                 uri: string
             }
-        }[],
-        unlink: (path: string) => void
+        },
+        unlink: (path: string) => void,
+        next: () => void,
+        retry: () => void
     ): void
 ): void;
 ```
