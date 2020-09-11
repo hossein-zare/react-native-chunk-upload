@@ -44,10 +44,7 @@ const chunk = new ChunkUpload({
     onWriteFileError: (e) => console.log(e),
 });
 
-chunk.digIn((file, unlink, next, retry) => {
-    if (file)
-        this.upload(file, unlink, next, retry);
-});
+chunk.digIn(this.upload.bind(this));
 
 upload(file, unlink, next, retry) {
     const body = new FormData();
