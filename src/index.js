@@ -102,7 +102,7 @@ class ChunkUpload {
     }
 
     eject() {
-        this.event(this.file, this.unlink.bind(this), this.next.bind(this), this.retry.bind(this));
+        this.event(this.file, this.next.bind(this), this.retry.bind(this), this.unlink.bind(this));
     }
 
     async unlink(path) {
