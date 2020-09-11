@@ -5,7 +5,7 @@ export = ChunkUpload;
 declare class ChunkUpload {
   constructor(props: ChunkUpload.Props);
 
-  digIn(onFinish: ChunkUpload.onFinish): void
+  digIn(Event: ChunkUpload.Event): void
 }
 
 declare namespace ChunkUpload {
@@ -16,15 +16,16 @@ declare namespace ChunkUpload {
         fileSize: number
     }
 
-    export interface onFinish {
+    export interface Event {
         (
-            files?: File[],
-            unlink?: (path: string) => void
+            file: File,
+            unlink: (path: string) => void,
+            next: () => void,
+            retry: () => void
         ): void
     }
 
     export interface File {
-        number: number,
         path: string,
         headers: Header,
         blob: Blob
