@@ -34,10 +34,10 @@ import Axios from 'axios';
 import ChunkUpload from 'react-native-chunk-upload';
 
 const chunk = new ChunkUpload({
-    path: response.path,
-    size: 10095,
-    fileName: response.fileName,
-    fileSize: response.size,
+    path: response.path, // Path to the file
+    size: 10095, // Chunk size (must be multiples of 3)
+    fileName: response.fileName, // Original file name
+    fileSize: response.size, // Original file size
 
     // Errors
     onFetchBlobError: (e) => console.log(e),
