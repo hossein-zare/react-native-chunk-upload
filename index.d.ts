@@ -19,9 +19,9 @@ declare namespace ChunkUpload {
     export interface Event {
         (
             file: File,
-            unlink: (path: string) => void,
             next: () => void,
-            retry: () => void
+            retry: () => void,
+            unlink: (path: string) => void
         ): void
     }
 
