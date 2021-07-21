@@ -35,7 +35,7 @@ class ChunkUpload {
     async getBase64Chunks() {
         let i = 0;
         await RNFetchBlob.fs.readStream(
-            'file://' + (this.data.path).replace('file://', ''),
+            this.data.path,
             'base64',
             this.data.size
         )
