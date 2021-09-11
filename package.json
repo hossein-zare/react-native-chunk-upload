@@ -1,6 +1,6 @@
 {
   "name": "react-native-chunk-upload",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "A package to bring Chunked File Upload / Resumable File Upload into React Native. Split a large file into multiple smaller pieces then upload them without worrying about network disconnection, even if it happens React Native Chunk Upload will only upload the failed chunk not the whole file!",
   "main": "src/index.js",
   "types": "index.d.ts",
